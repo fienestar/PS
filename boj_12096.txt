@@ -1,0 +1,5 @@
+/*
+    
+    https://www.acmicpc.net/problem/12096
+*/
+02-521-0487

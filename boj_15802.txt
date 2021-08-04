@@ -1,0 +1,5 @@
+/*
+    타노스
+    https://www.acmicpc.net/problem/15802
+*/
+0
