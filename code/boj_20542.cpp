@@ -3,43 +3,48 @@
     https://www.acmicpc.net/problem/20542
 */
 #include <bits/stdc++.h>
+
 using namespace std;
-typedef long long ll;
-typedef pair<ll, ll> pll;
-#define all(v) v.begin(), v.end()
-const ll MX = 101010;
-const ll INF = 9e15;
-const ll MOD = 998'244'353;
-ll n, m;
-string s1, s2;
-vector < vector<ll> >dp;
-ll sol(ll x, ll y) {
-	if(x == n && y == m) return 0;
-	ll& ret = dp[x][y];
-	if(ret != -1) return ret;
-	ret = INF;
-	if (x < n && y < m) {
-		ll chk = 1;
-		if(s1[x] == s2[y]) chk = 0;
-		if(s1[x] == 'i' && (s2[y] == 'j' || s2[y] == 'l')) chk = 0;
-		if(s1[x] == 'v' && (s2[y] == 'w')) chk = 0;
-		ret = min(sol(x + 1, y + 1) + chk, ret);
-	}
-	if(y < m) ret = min(ret, sol(x, y + 1) + 1);
-	if(x < n) ret = min(ret, sol(x + 1, y) + 1);
-	return ret;
-}
+using ull = unsigned long long;
+
 int main()
 {
 	cin.tie(nullptr)->sync_with_stdio(false);
+	size_t n, m;
 	cin >> n >> m;
-	cin >> s1 >> s2;
-	dp.resize(n + 1);
-	for (int i = 0; i <= n; i++) {
-		dp[i].resize(m + 1);
-		for (int j = 0; j <= m; j++) {
-			dp[i][j] = -1;
-		}
-	}
-	cout << sol(0, 0);
+
+	string a, b;
+	cin >> a >> b;
+
+	auto match = [](char a, char b){
+		if(a == b)
+			return true;
+		if(a == 'i' && (b == 'j' || b == 'l'))
+			return true;
+		if(a == 'v' && b == 'w')
+			return true;
+		return false;
+	};
+
+	function<ull(size_t,size_t)> distance = [&](size_t i, size_t j){
+		static vector<vector<ull>> memo(n+1, vector<ull>(m+1, -1));
+
+		if(i == n && j == m)
+			return 0ull;
+
+		auto& ret = memo[i][j];
+		if(ret != -1)
+			return ret;
+
+		if(i != n && j != m)
+			ret = min(ret, distance(i+1,j+1)+!match(a[i],b[j]));
+		if(i != n)
+			ret = min(ret, distance(i+1,j)+1);
+		if(j != m)
+			ret = min(ret, distance(i,j+1)+1);
+
+		return ret;
+	};
+
+	cout << distance(0,0);
 }
