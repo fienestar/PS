@@ -1,7 +1,5 @@
 /*
-    Lv. 3
-                
-                정수 삼각형
+    정수 삼각형
     https://programmers.co.kr/learn/courses/30/lessons/43105
 */
 #include <bits/stdc++.h>
