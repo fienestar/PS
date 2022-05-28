@@ -1,0 +1,7 @@
+/*
+    if 2
+    https://www.acmicpc.net/problem/15550
+*/
+double 16777217
+int 16777217
+float 16777217
